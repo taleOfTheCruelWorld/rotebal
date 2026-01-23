@@ -5,7 +5,7 @@
 <h1 class="text-center">{{ $cat->name }}</h1>
 @if ($cat->category == null)
 @else
-<p class="text-center text-body-secondary"> <a href="/category/{{ $cat->category->id}}">{{ $cat->category->name}}</a></p>
+<p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$cat->id]) }}">{{ $cat->category->name}}</a></p>
 @endif
 <p class="">{{ $cat->description }}</p>
 @if ($cat->categories->isEmpty())
@@ -29,6 +29,23 @@
           @endif
         </li>
       </ul>
+        <select name="sort">
+            <option value=""></option>
+            <option value="price_down" @if (isSet($q_sort) && $q_sort == 'price_down') {{'selected'}} @endif>Сначала дешевые</option>
+            <option value="price_up"@if (isSet($q_sort) && $q_sort == 'price_up'){{'selected'}} @endif>Сначала дорогие</option>
+            <option value="abc"@if (isSet($q_sort) && $q_sort == 'abc'){{'selected'}}@endif>По алфавиту</option>
+            <option value="new"@if (isSet($q_sort) && $q_sort == 'new'){{'selected'}}@endif>Сначала новые</option>
+        </select>
+        <select name="country">
+            <option value=""></option>
+            @foreach ($countries as $country)
+                @if (isSet($q_country) && $country->id == $q_country)
+                <option value="{{ $country->id }}" selected>{{ $country->name }}</option>
+                @else
+                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                @endif
+            @endforeach
+        </select>
       <button class="btn" type="submit">Показать</button>
       <a class="btn" href="{{ route('category', ['Category'=>$cat->id]) }}">Reset</a>
     </form>
@@ -39,7 +56,7 @@
 <table class="table table-hover">
     @foreach ($cat->categories as $category)
     <tr>
-        <td><a class="link-offset-2 link-dark link-underline link-underline-opacity-0 " href="/category/{{ $category->id }}">{!! $category->name!!}</a></td>
+        <td><a class="link-offset-2 link-dark link-underline link-underline-opacity-0 " href="{{ route('category', ['Category'=>$category->id]) }}">{!! $category->name!!}</a></td>
     </tr>
     @endforeach
 </table>
