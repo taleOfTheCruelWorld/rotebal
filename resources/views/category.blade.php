@@ -30,7 +30,7 @@
         </li>
       </ul>
       <button class="btn" type="submit">Показать</button>
-      <a class="btn" href="/category/{{ $cat->id }}">Reset</a>
+      <a class="btn" href="{{ route('category', ['Category'=>$cat->id]) }}">Reset</a>
     </form>
   </div>
 </nav>
