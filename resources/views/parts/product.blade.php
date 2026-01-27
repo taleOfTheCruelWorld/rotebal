@@ -5,7 +5,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ $prod->name }}</h5>
             <p class="card-text">{{ $prod->price }} руб.</p>
-            <a href="/product/{{ $prod->id }}" class="btn btn-primary">About</a>
+            <a href="{{ route('product', ['Product'=>$prod->id]) }}" class="btn btn-primary">About</a>
             <a href="" class="btn btn-primary">To Cart</a>
         </div>
     </div>

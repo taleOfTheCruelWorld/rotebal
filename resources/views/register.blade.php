@@ -32,6 +32,6 @@
         </ul>
     </div>
 @endif
-<span><a href="/login" class="link-offset-2 link-dark link-underline link-underline-opacity-0 ">Login</a></span>
+<span><a href="{{ route('login') }}" class="link-offset-2 link-dark link-underline link-underline-opacity-0 ">Login</a></span>
 </div>
 @endsection

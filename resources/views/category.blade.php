@@ -5,7 +5,7 @@
 <h1 class="text-center">{{ $cat->name }}</h1>
 @if ($cat->category == null)
 @else
-<p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$cat->id]) }}">{{ $cat->category->name}}</a></p>
+<p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$cat->parent_id]) }}">{{ $cat->category->name}}</a></p>
 @endif
 <p class="">{{ $cat->description }}</p>
 @if ($cat->categories->isEmpty())
@@ -74,7 +74,7 @@
     @foreach ($prods as $prod)
     <tr>
         <td> <a href="https://www.вкусней.рф/{{Storage::url($prod->photos[0]->path) }}""> <img src="https://www.вкусней.рф/{{Storage::url($prod->photos[0]->thumbnails->path) }}" class="img-thumbnail" width="200px" alt=""></a></td>
-        <td><a class="link-offset-2 link-dark link-underline link-underline-opacity-0 " href="/product/{{ $prod->id }}">{!! $prod->name!!}</a></td>
+        <td><a class="link-offset-2 link-dark link-underline link-underline-opacity-0 " href="{{ route('product', ['Product'=>$prod->id]) }}">{!! $prod->name!!}</a></td>
         <td>{{ $prod->price }} руб</td>
     </tr>
     @endforeach

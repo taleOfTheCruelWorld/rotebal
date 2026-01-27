@@ -21,7 +21,7 @@ class AuthController extends Controller
             ],[
             'pass.confirmed'=>'Пароль должны совпадать',
             ]);
-        if (Auth::attempt(['login'=>$r->login,'password'=>$r->pass])) {
+        if (Auth::attempt(['login'=>$r->login,'password'=>$r->pass],$r->rememberMe)) {
             return redirect('/');
         }
         return redirect('/login');
@@ -50,6 +50,9 @@ class AuthController extends Controller
     }
     public function cabinet() {
         $data['title'] = "Some Shop";
+        if (Auth::user()->admin) {
+        return view('cabinet_admin', $data);
+        }
         return view('cabinet', $data);
     }
 }

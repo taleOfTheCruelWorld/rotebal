@@ -3,9 +3,9 @@
 <div class="container-fluid">
 
     <h1 class="text-center">{{ $prod->name }}</h1>
-    <p class="text-center text-body-secondary"> <a href="/category/{{ $prod->category->id}}">{{
+    <p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$prod->category_id]) }}">{{
             $prod->category->name}}</a></p>
-    <p class="text-center text-body-secondary"> <a href="/country/{{ $prod->country->id}}">{{ $prod->country->name}}</a>
+    <p class="text-center text-body-secondary"> <a href="{{ route('country', ['Country'=>$prod->country_id]) }}">{{ $prod->country->name}}</a>
     </p>
     <p class="text-center">{{ $prod->description }}</p>
 

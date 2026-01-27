@@ -1,9 +1,9 @@
 @extends('theme')
 @section('content')
 <div class="container-fluid">
-<h1>Личный кабинет</h1>
+<h1>Кабинет администратора</h1>
 <div class="row align-items-center">
-{{ Auth::user()->login}}
+You are admin {{ Auth::user()->login}} !
 </div>
 </div>
 @endsection
