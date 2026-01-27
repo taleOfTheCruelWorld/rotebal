@@ -6,6 +6,9 @@
     <a class="navbar-brand" href="#">Filters</a>
     <div class="collapse navbar-collapse" id="navbarNav">
     <form action="" method="get">
+    @if (isSet($sr_value))
+     <input type="hidden" name="name" value="{{ $sr_value }}">
+    @endif
       <ul class="navbar-nav">
         <li class="nav-item">
           <span class="nav-link active" aria-current="page" href="#">Ценa</span>

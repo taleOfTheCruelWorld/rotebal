@@ -38,7 +38,6 @@ class MainController extends Controller
         return view ('products', $data);
     }
     public function search(Request $r) {
-        $data['sr_value'] = $r->name;
         $query = Product::query();
         if ($r->category > 0)
         {
@@ -52,20 +51,17 @@ class MainController extends Controller
         {
             $query->where('price', '>=',$r->min);
         }
-        $date['q_sort'] = $r->sort;
+        if ($r->name) {
+            $query->where('name', 'like', "%{$r->name}%")->paginate(21)->withQueryString();
+        }
+        $data['sr_value'] = $r->name;
         $data['q_categ'] = $r->category;
         $data['q_min'] = $r->min;
         $data['q_max'] = $r->max;
         $data['cats'] = Category::where('parent_id', '!=', null)->get();
-        if (strlen($r->name)>2) {
-            $query->where('name', 'like', "%{$r->name}%")->paginate(21)->withQueryString();
-            $data['prods'] = $query->paginate(21);
-            $data['title'] = "Some Shop";
+        $data['title'] = "Some Shop";
+        $data['prods'] = $query->paginate(21)->withQueryString();
         return view ('products', $data);
-        }
-        else {
-            return back();
-        }
     }
     public function categoryList() {
         $data['cats'] = Category::where('parent_id', null)->get();
