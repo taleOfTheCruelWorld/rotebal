@@ -21,7 +21,7 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse"  id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/">Home</a>
@@ -32,7 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/product">Products</a>
                         </li>
-                    </ul>
+                        <li>
                     <form class="d-flex" role="search" method="get" action="/search">
                         @if (isSet($sr_value))
                         <input class="form-control me-2" name="name" type="search" placeholder="Search" aria-label="Search" / value="{{$sr_value}}">
@@ -41,6 +41,16 @@
                         @endif
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+                    </li>
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">{{ Auth::user()->login}}</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/logout">Logout</a>
+                        <li>
+                        @endauth
+                    </ul>
                 </div>
             </div>
         </nav>
