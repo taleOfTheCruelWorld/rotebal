@@ -48,4 +48,8 @@ class AuthController extends Controller
         Auth::login($u);
         return redirect('/');
     }
+    public function cabinet() {
+        $data['title'] = "Some Shop";
+        return view('cabinet', $data);
+    }
 }

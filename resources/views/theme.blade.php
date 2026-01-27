@@ -42,12 +42,20 @@
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                     </li>
-                        @auth
+                        @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="/">{{ Auth::user()->login}}</a>
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="/logout">Logout</a>
+                            <a class="nav-link" href="{{ route('register')}}">Register</a>
+                        <li>
+                        @endguest
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cabinet') }}">{{ Auth::user()->login}}</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                         <li>
                         @endauth
                     </ul>

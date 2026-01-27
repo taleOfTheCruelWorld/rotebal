@@ -12,9 +12,11 @@ Route::get('/product/{Product}', [MainController::class,'productShow']);
 Route::get('/product', [MainController::class,'productList']);
 Route::get('/country/{Country}', [MainController::class,'countryShow']);
 Route::get('/search', [MainController::class,'search']);
-Route::get('/register', [AuthController::class,'register']);
-Route::get('/login', [AuthController::class,'login']);
-Route::post('/register', [AuthController::class,'registerHandle']);
-Route::post('/login', [AuthController::class,'loginHandle']);
+Route::get('/register', [AuthController::class,'register'])->name('register');
+Route::get('/login', [AuthController::class,'login'])->name('login');
+Route::post('/register', [AuthController::class,'registerHandle'])->name('registerHandle');
+Route::post('/login', [AuthController::class,'loginHandle'])->name('loginHandle');
 Route::get('/logout', [AuthController::class,'logout'])->name('logout');
+Route::get('/cabinet', [AuthController::class,'cabinet'])->name('cabinet')->middleware('auth');
+
 
