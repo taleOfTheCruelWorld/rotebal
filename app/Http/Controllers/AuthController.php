@@ -64,7 +64,7 @@ class AuthController extends Controller
             ]);
         if (Hash::check($r->old_pass, Auth::user()->password)) {
             User::find(Auth::id())->update(['password'=>Hash::make($r->pass)]);
-            return redirect('/cabinet');
+            return redirect('/cabinet')->with('success', ['pass'=>'Password succesfully changed']);
         }
             return redirect('/cabinet')->withErrors(['password.check'=>'Old password incorrect']);
     }

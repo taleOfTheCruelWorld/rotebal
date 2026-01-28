@@ -64,6 +64,24 @@
         </nav>
     </header>
     @yield('content', default: '')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if (session('success'))
+    <div class="alert alert-success">
+        <ul>
+            @foreach (session('success') as $suc)
+                <li>{{ $suc}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <footer>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
