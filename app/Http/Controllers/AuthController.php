@@ -19,12 +19,14 @@ class AuthController extends Controller
                 'login' => ['required', 'exists:users', 'max:15'],
                 'pass' => ['required', 'confirmed','min:3'],
             ],[
+            'login.exists'=>'This login does not exist',
             'pass.confirmed'=>'Пароль должны совпадать',
             ]);
-        if (Auth::attempt(['login'=>$r->login,'password'=>$r->pass],$r->rememberMe)) {
+        $successful= Auth::attempt(['login'=>$r->login,'password'=>$r->pass],$r->rememberMe);
+        if ($successful) {
             return redirect('/');
         }
-        return redirect('/login');
+        return redirect('/login')->withErrors(['password.check'=>'Password incorrect']);
     }
     public function logout() {
         Auth::logout();
@@ -54,5 +56,18 @@ class AuthController extends Controller
         return view('cabinet_admin', $data);
         }
         return view('cabinet', $data);
+    }
+    public function changePass(Request $r) {
+        $validateData = $r->validate(
+            [
+                'pass' => ['required', 'confirmed','min:3'],
+            ],[
+            'pass.confirmed'=>'Пароль должны совпадать',
+            ]);
+        if (Hash::check($r->old_pass, Auth::user()->password)) {
+            User::find(Auth::user()->id)->update(['password'=>Hash::make($r->pass)]);
+            return redirect('/cabinet');
+        }
+            return redirect('/cabinet')->withErrors(['password.check'=>'Old password incorrect']);
     }
 }
