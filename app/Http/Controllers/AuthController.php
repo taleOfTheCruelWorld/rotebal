@@ -65,7 +65,7 @@ class AuthController extends Controller
             'pass.confirmed'=>'Пароль должны совпадать',
             ]);
         if (Hash::check($r->old_pass, Auth::user()->password)) {
-            User::find(Auth::user()->id)->update(['password'=>Hash::make($r->pass)]);
+            User::find(Auth::id())->update(['password'=>Hash::make($r->pass)]);
             return redirect('/cabinet');
         }
             return redirect('/cabinet')->withErrors(['password.check'=>'Old password incorrect']);
