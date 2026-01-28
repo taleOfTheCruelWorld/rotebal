@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\ProductFilter;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Country;
+use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -112,12 +113,16 @@ class MainController extends Controller
         return view ('category', $data);
     }
     public function productShow( Product $Product) {
-        $data['prod'] = $Product;
-        $data['prods'] = $Product::where('category_id', $data['prod']->category_id)->inRandomOrder()->limit(3)->get();
+        $data['product'] = $Product;
+        $data['prods'] = $Product::where('category_id', $data['product']->category_id)->inRandomOrder()->limit(3)->get();
         return view ('product', $data);
     }
-    public function countryShow( Country $Country) {
+    public function countryShow( Country $Country, Product $Product) {
         $data['country'] = $Country;
         return view ('country', $data);
+    }
+    public function review(Request $r, Product $Product) {
+        Review::create(['content'=>$r->text, 'mark'=>$r->mark, 'user_id'=>Auth::id(), 'product_id'=>$Product->id]);
+        return back();
     }
 }

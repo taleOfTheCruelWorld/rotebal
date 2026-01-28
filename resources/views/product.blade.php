@@ -1,45 +1,82 @@
-@extends('theme', ['title'=> 'Продукт N'. $prod->id])
+@extends('theme', ['title'=> 'Продукт N'. $product->id])
 @section('content')
 <div class="container-fluid">
 
-    <h1 class="text-center">{{ $prod->name }}</h1>
-    <p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$prod->category_id]) }}">{{
-            $prod->category->name}}</a></p>
-    <p class="text-center text-body-secondary"> <a href="{{ route('country', ['Country'=>$prod->country_id]) }}">{{ $prod->country->name}}</a>
+    <h1 class="text-center">{{ $product->name }}</h1>
+    <p class="text-center text-body-secondary"> <a
+            href="{{ route('category', ['Category'=>$product->category_id]) }}">{{
+            $product->category->name}}</a></p>
+    <p class="text-center text-body-secondary"> <a href="{{ route('country', ['Country'=>$product->country_id]) }}">{{
+            $product->country->name}}</a>
     </p>
-    <p class="text-center">{{ $prod->description }}</p>
+    <p class="text-center">{{ $product->description }}</p>
 
-    @foreach ($prod->photos as $photo)
+    @foreach ($product->photos as $photo)
     <img src="https://www.вкусней.рф/{{Storage::url($photo->path) }}" class="img-thumbnail" width="300px"
         alt="https://www.вкусней.рф/{{ substr($photo->path,7) }}">
     @endforeach
 
     <table class="table">
         <tr>
-            @if ($prod->volume !== null)
+            @if ($product->volume !== null)
             <td>Volume</td>
             @endif
-            @if ($prod->fat!== null)
+            @if ($product->fat!== null)
             <td>Fat</td>
             @endif
             <td>Price</td>
             <td>Retail price</td>
         </tr>
         <tr>
-            @if ($prod->volume !== null)
-            <td>{{ $prod->volume}}</td>
+            @if ($product->volume !== null)
+            <td>{{ $product->volume}}</td>
             @endif
-            @if ($prod->fat!== null)
-            <td>{{ $prod->fat}}</td>
+            @if ($product->fat!== null)
+            <td>{{ $product->fat}}</td>
             @endif
-            <td>{{ $prod->price}} руб</td>
-            <td>{{ $prod->price_retail}} руб</td>
+            <td>{{ $product->price}} руб</td>
+            <td>{{ $product->price_retail}} руб</td>
         </tr>
     </table>
     <h1>Похожие продукты</h1>
     <div class="row align-items-center">
         @foreach ( $prods as $prod)
         @include('parts.product')
+        @endforeach
+    </div>
+    @auth
+    <h1>Оставить отзыв</h1>
+    <form action="{{ route('review', ['Product'=>$product->id]) }}" method="post">
+        @csrf()
+        <div class="mb-3">
+            <label class="form-label">Text</label>
+            <input type="textarea" name="text" class="form-control" placeholder="text" aria-label="text"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="mb-3">
+            <label for="mark" class="form-label">Mark</label>
+            <select class="form-select" name="mark">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select>
+        </div>
+        <button type="submit" style="width: 100%;" class="btn btn-primary">Submit</button>
+    </form>
+    @endauth
+    <h1>Отзывы</h1>
+    <div class="row align-items-center">
+        @foreach ( $product->reviews as $review)
+        <figure>
+            <blockquote class="blockquote">
+                <p>{{ $review->content}}</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+               {{ $review->user->login }}  <cite>Rating: {{ $review->mark }}/5</cite>
+                </figcaption>
+        </figure>
         @endforeach
     </div>
 </div>
