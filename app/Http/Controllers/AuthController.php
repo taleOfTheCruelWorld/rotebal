@@ -17,10 +17,8 @@ class AuthController extends Controller
         $validateData = $r->validate(
             [
                 'login' => ['required', 'exists:users', 'max:15'],
-                'pass' => ['required', 'confirmed','min:3'],
             ],[
             'login.exists'=>'This login does not exist',
-            'pass.confirmed'=>'Пароль должны совпадать',
             ]);
         $successful= Auth::attempt(['login'=>$r->login,'password'=>$r->pass],$r->rememberMe);
         if ($successful) {

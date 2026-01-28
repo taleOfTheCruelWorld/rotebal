@@ -12,10 +12,6 @@
     <label for="exampleInputPassword1"  class="form-label">Password</label>
     <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Repeat Password</label>
-    <input type="password" name="pass_confirmation" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
-  </div>
   <div class="md-3">
   <div class="form-check">
   <input class="form-check-input" name="rememberMe"  type="hidden" value="0" id="flexCheckDefault">
