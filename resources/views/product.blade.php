@@ -54,8 +54,8 @@
                 aria-describedby="basic-addon1">
         </div>
         <div class="mb-3">
-            <label for="mark" class="form-label">Mark</label>
-            <select class="form-select" name="mark">
+            <label for="rating" class="form-label">Rating</label>
+            <select class="form-select" name="rating">
                 <option value="5">5</option>
                 <option value="4">4</option>
                 <option value="3">3</option>
@@ -74,7 +74,7 @@
                 <p>{{ $review->content}}</p>
             </blockquote>
             <figcaption class="blockquote-footer">
-               {{ $review->user->login }}  <cite>Rating: {{ $review->mark }}/5</cite>
+               {{ $review->user->login }}  <cite>Rating: {{ $review->rating}}/5</cite>
                 </figcaption>
         </figure>
         @endforeach

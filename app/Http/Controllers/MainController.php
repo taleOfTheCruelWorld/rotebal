@@ -122,7 +122,7 @@ class MainController extends Controller
         return view ('country', $data);
     }
     public function review(Request $r, Product $Product) {
-        Review::create(['content'=>$r->text, 'mark'=>$r->mark, 'user_id'=>Auth::id(), 'product_id'=>$Product->id]);
+        Review::create(['content'=>$r->text, 'rating'=>$r->rating, 'user_id'=>Auth::id(), 'product_id'=>$Product->id]);
         return back();
     }
 }
