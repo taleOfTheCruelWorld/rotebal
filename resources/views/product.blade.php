@@ -68,7 +68,7 @@
     @endauth
     <h1>Отзывы</h1>
     <div class="row align-items-center">
-        @foreach ( $product->reviews as $review)
+        @forelse ( $product->reviews as $review)
         <figure>
             <blockquote class="blockquote">
                 <p>{{ $review->content}}</p>
@@ -76,8 +76,13 @@
             <figcaption class="blockquote-footer">
                {{ $review->user->login }}  <cite>Rating: {{ $review->rating}}/5</cite>
                 </figcaption>
+            <figcaption class="blockquote-footer">
+               <cite>Date: {{ $review->created_at}}</cite>
+                </figcaption>
         </figure>
-        @endforeach
+        @empty
+        <h3>No reviews</h3>
+        @endforelse
     </div>
 </div>
 @endsection
