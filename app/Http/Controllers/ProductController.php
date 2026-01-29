@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Category;
 
-class MainController extends Controller
+class ProductController extends Controller
 {
-    public function index() {
-        $data['prods'] = Product::inRandomOrder()->limit(3)->get();
-        $data['title'] = "Some Shop";
-        return view ('index', $data);
+    public function productShow( Product $Product) {
+        $data['product'] = $Product;
+        $data['prods'] = $Product::where('category_id', $data['product']->category_id)->inRandomOrder()->limit(3)->get();
+        return view ('product', $data);
     }
-    public function search(Request $r) {
+    public function productList(Request $r) {
         $query = Product::query();
         if ($r->category > 0)
         {
@@ -27,16 +28,12 @@ class MainController extends Controller
         {
             $query->where('price', '>=',$r->min);
         }
-        if ($r->name) {
-            $query->where('name', 'like', "%{$r->name}%")->paginate(21)->withQueryString();
-        }
-        $data['sr_value'] = $r->name;
         $data['q_categ'] = $r->category;
         $data['q_min'] = $r->min;
         $data['q_max'] = $r->max;
         $data['cats'] = Category::where('parent_id', '!=', null)->get();
-        $data['title'] = "Some Shop";
         $data['prods'] = $query->paginate(21)->withQueryString();
+        $data['title'] = "Some Shop";
         return view ('products', $data);
     }
 }
