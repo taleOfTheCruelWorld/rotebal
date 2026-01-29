@@ -69,12 +69,13 @@
     <h1>Отзывы</h1>
     <div class="row align-items-center">
         @forelse ( $product->reviews as $review)
-        <figure>
+        <figure style="border-bottom: 2px solid black;">
             <blockquote class="blockquote">
+            <h5>{{ $review->user->login }}</h5>
                 <p>{{ $review->content}}</p>
             </blockquote>
             <figcaption class="blockquote-footer">
-               {{ $review->user->login }}  <cite>Rating: {{ $review->rating}}/5</cite>
+               <cite>Rating: {{ $review->rating}}/5</cite>
                 </figcaption>
             <figcaption class="blockquote-footer">
                <cite>Date: {{ $review->created_at}}</cite>
