@@ -75,7 +75,13 @@
                 <p>{{ $review->content}}</p>
             </blockquote>
             <figcaption class="blockquote-footer">
-               <cite>Rating: {{ $review->rating}}/5</cite>
+            @for ($i =0 ; $i < 5; $i++)
+            @if ($i<$review->rating)
+               ★
+            @else
+                ☆
+            @endif
+            @endfor
                 </figcaption>
             <figcaption class="blockquote-footer">
                <cite>Date: {{ $review->created_at}}</cite>
