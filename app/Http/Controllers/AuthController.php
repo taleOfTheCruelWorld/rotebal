@@ -55,7 +55,11 @@ class AuthController extends Controller
         }
         return view('cabinet', $data);
     }
-    public function changePass(Request $r) {
+    public function changePass() {
+        $data['title'] = "Some Shop";
+        return view ('changePassword', $data);
+    }
+    public function changePassHandle(Request $r) {
         $validateData = $r->validate(
             [
                 'pass' => ['required', 'confirmed','min:3'],
@@ -66,6 +70,6 @@ class AuthController extends Controller
             User::find(Auth::id())->update(['password'=>Hash::make($r->pass)]);
             return redirect('/cabinet')->with('success', ['pass'=>'Password succesfully changed']);
         }
-            return redirect('/cabinet')->withErrors(['password.check'=>'Old password incorrect']);
+            return back()->withErrors(['password.check'=>'Old password incorrect']);
     }
 }

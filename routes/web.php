@@ -21,7 +21,8 @@ Route::post('/register', [AuthController::class,'registerHandle'])->name('regist
 Route::post('/login', [AuthController::class,'loginHandle'])->name('loginHandle');
 Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 Route::get('/cabinet', [AuthController::class,'cabinet'])->name('cabinet')->middleware('auth');
-Route::post('/cabinet/changePass', [AuthController::class,'changePass'])->name('changePass')->middleware('auth');
+Route::get('/cabinet/changePass', [AuthController::class,'changePass'])->name('changePass')->middleware('auth');
+Route::post('/cabinet/changePass', [AuthController::class,'changePassHandle'])->name('changePassHandle')->middleware('auth');
 Route::post('/product/{Product}/review', [ReviewController::class,'review'])->name('review')->middleware('auth');
 /* Route::get('/cabinet/changePassword', [AuthController::class,'cabinet'])->name('changePassword')->middleware('auth'); */
 
