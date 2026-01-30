@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,8 +52,10 @@ class AuthController extends Controller
     public function cabinet() {
         $data['title'] = "Some Shop";
         if (Auth::user()->admin) {
+        $data['reviews'] = Review::where('status',0)->get();
         return view('cabinet_admin', $data);
         }
+        $data['reviews'] = Review::where('user_id', Auth::id())->get();
         return view('cabinet', $data);
     }
     public function changePass() {
@@ -71,5 +74,13 @@ class AuthController extends Controller
             return redirect('/cabinet')->with('success', ['pass'=>'Password succesfully changed']);
         }
             return back()->withErrors(['password.check'=>'Old password incorrect']);
+    }
+    public function reviewCheck(Request $r) {
+        $data['title'] = "Some Shop";
+        if (Auth::user()->admin) {
+            Review::find($r->review)->update(['status'=>$r->status]);
+            return back();
+        }
+        return back();
     }
 }

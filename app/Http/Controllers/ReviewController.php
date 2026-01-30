@@ -17,6 +17,7 @@ class ReviewController extends Controller
             ]);
         $r['user_id']=Auth::id();
         $r['product_id']=$Product->id;
+        $r['status']=0;
         Review::create($r->all());
         return back();
     }

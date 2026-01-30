@@ -68,7 +68,7 @@
     @endauth
     <h1>Отзывы</h1>
     <div class="row align-items-center">
-        @forelse ( $product->reviews as $review)
+        @forelse ( $product->reviews->where('status',1) as $review)
         <figure style="border-bottom: 2px solid black;">
             <blockquote class="blockquote">
             <h5>{{ $review->user->login }}</h5>
