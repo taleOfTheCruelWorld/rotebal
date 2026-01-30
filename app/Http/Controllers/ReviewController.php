@@ -11,7 +11,13 @@ use App\Models\Review;
 class ReviewController extends Controller
 {
     public function review(Request $r, Product $Product) {
-        Review::create(['content'=>$r->text, 'rating'=>$r->rating, 'user_id'=>Auth::id(), 'product_id'=>$Product->id]);
+        $validateData = $r->validate(
+            [
+                'content' => ['required','min:5'],
+            ]);
+        $r['user_id']=Auth::id();
+        $r['product_id']=$Product->id;
+        Review::create($r->all());
         return back();
     }
 }

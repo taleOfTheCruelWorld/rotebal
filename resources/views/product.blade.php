@@ -50,7 +50,7 @@
         @csrf()
         <div class="mb-3">
             <label class="form-label">Text</label>
-            <input type="textarea" name="text" class="form-control" placeholder="text" aria-label="text"
+            <input type="textarea" name="content" class="form-control" placeholder="text" aria-label="text"
                 aria-describedby="basic-addon1">
         </div>
         <div class="mb-3">
