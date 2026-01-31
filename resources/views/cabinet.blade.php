@@ -1,6 +1,9 @@
 @extends('theme')
 @section('content')
-<div class="container-fluid">
+@php
+    $stats=['В ожидании', 'Подтверждено','Отклонено'];
+@endphp
+<div class="container">
     <h1>Личный кабинет</h1>
     <div class="row align-items-center">
         {{ Auth::user()->login}}
@@ -13,23 +16,12 @@
                 <td>Отзыв</td>
                 <td>Статус</td>
             </tr>
-            @forelse ($reviews as $review)
+            @forelse (Auth::user()->reviews as $review)
             <tr>
                 <td>{{$review->product->name}}</td>
                 <td style="text-align: center;">{{$review->rating}}</td>
                 <td>{{$review->content}}</td>
-                <td style="min-width: 300px;"> @switch($review->status)
-                    @case(1)
-                        Подтверждено
-                    @break
-                    @case(2)
-                        Отклонено
-                    @break
-                    @default
-                        В ожидании
-                    @endswitch
-                </td>
-
+                <td style="min-width: 300px;">  {{ $stats[$review->status] }}</td>
             </tr>
             @empty
             Отзывов нет

@@ -21,4 +21,12 @@ class ReviewController extends Controller
         Review::create($r->all());
         return back();
     }
+    public function reviewCheck(Request $r) {
+        $data['title'] = "Some Shop";
+        if (Auth::user()->admin) {
+            Review::find($r->review)->update(['status'=>$r->status]);
+            return back();
+        }
+        return back();
+    }
 }

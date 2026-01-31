@@ -1,6 +1,6 @@
 @extends('theme')
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <h1>Кабинет администратора</h1>
     <div class="row align-items-center">
         You are admin {{ Auth::user()->login}} !
@@ -33,16 +33,16 @@
                     @endswitch
                 </td>
 
+                <form action="" method="post">
+                @csrf
+                <input type="hidden" name="review" value="{{ $review->id }}">
                 <td>
-                    <form action="" method="post">@csrf <input type="hidden" name="review"
-                            value="{{ $review->id }}"><input type="hidden" name="status" value="1"> <button
-                            type="submit" class="btn btn-success">Принять</button></form>
+                        <button name="status" value="1"type="submit" class="btn btn-success">Принять</button>
                 </td>
                 <td>
-                    <form action="" method="post">@csrf<input type="hidden" name="review"
-                            value="{{ $review->id }}"><input type="hidden" name="status" value="2"> <button
-                            type="submit" class="btn btn-danger">Отклонить</button></form>
+                     <button type="submit" name="status" value="2" class="btn btn-danger">Отклонить</button>
                 </td>
+                </form>
             </tr>
             @empty
             Отзывов нет

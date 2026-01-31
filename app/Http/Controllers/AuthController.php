@@ -55,7 +55,6 @@ class AuthController extends Controller
         $data['reviews'] = Review::where('status',0)->get();
         return view('cabinet_admin', $data);
         }
-        $data['reviews'] = Review::where('user_id', Auth::id())->get();
         return view('cabinet', $data);
     }
     public function changePass() {
@@ -74,13 +73,5 @@ class AuthController extends Controller
             return redirect('/cabinet')->with('success', ['pass'=>'Password succesfully changed']);
         }
             return back()->withErrors(['password.check'=>'Old password incorrect']);
-    }
-    public function reviewCheck(Request $r) {
-        $data['title'] = "Some Shop";
-        if (Auth::user()->admin) {
-            Review::find($r->review)->update(['status'=>$r->status]);
-            return back();
-        }
-        return back();
     }
 }
