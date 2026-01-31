@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CountryController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class,'index'])->name('index');
@@ -26,7 +27,7 @@ Route::get('/cabinet/changePass', [AuthController::class,'changePass'])->name('c
 Route::post('/cabinet/changePass', [AuthController::class,'changePassHandle'])->name('changePassHandle')->middleware('auth');
 Route::post('/product/{Product}/review', [ReviewController::class,'review'])->name('review')->middleware('auth');
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware(IsAdmin::class)->group(function(){
 Route::resource('categories', CategoryController::class);
 });
 /* Route::get('/cabinet/changePassword', [AuthController::class,'cabinet'])->name('changePassword')->middleware('auth'); */
