@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -57,5 +56,76 @@ class CategoryController extends Controller
         $data['prods'] = $query->paginate(10)->withQueryString();
         $data['title'] = "Some Shop";
         return view ('category', $data);
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $data['cats'] = Category::orderBy('sort')->get();
+        $data['title'] = "Some Shop";
+        return view ('admin/categories/index', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $data['cats'] = Category::get();
+        $data['title'] = "Some Shop";
+        return view ('admin/categories/create', $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request, Category $category)
+    {
+        Category::create($request->all());
+        return redirect('admin/categories');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Category $category)
+    {
+        $data['cat'] = $category;
+        $data['title'] = "Some Shop";
+        return view ('admin/categories/show', $data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Category $category)
+    {
+        $data['cat'] = $category;
+        $data['cats'] = Category::get();
+        $data['title'] = "Some Shop";
+        return view ('admin/categories/edit', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Category $category)
+    {
+        //
+        if ($request->parent_id == 0 ) {
+            $request['parent_id'] = null;
+        }
+        $category->update($request->all());
+        return redirect('admin/categories');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return redirect('admin/categories');
     }
 }

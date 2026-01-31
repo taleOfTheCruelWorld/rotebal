@@ -25,6 +25,10 @@ Route::post('/cabinet', [ReviewController::class,'reviewCheck'])->name('reviewCh
 Route::get('/cabinet/changePass', [AuthController::class,'changePass'])->name('changePass')->middleware('auth');
 Route::post('/cabinet/changePass', [AuthController::class,'changePassHandle'])->name('changePassHandle')->middleware('auth');
 Route::post('/product/{Product}/review', [ReviewController::class,'review'])->name('review')->middleware('auth');
+
+Route::prefix('admin')->group(function(){
+Route::resource('categories', CategoryController::class);
+});
 /* Route::get('/cabinet/changePassword', [AuthController::class,'cabinet'])->name('changePassword')->middleware('auth'); */
 
 
