@@ -31,6 +31,7 @@ Route::post('/product/{Product}/review', [ReviewController::class,'review'])->na
 
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function(){
 Route::resource('categories', CategoryController::class);
+Route::resource('countries', CountryController::class);
 });
 /* Route::get('/cabinet/changePassword', [AuthController::class,'cabinet'])->name('changePassword')->middleware('auth'); */
 

@@ -9,7 +9,7 @@
     <a class="nav-link" href="#">Products</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Countries</a>
+    <a class="nav-link" href="{{ route('countries.index') }}">Countries</a>
   </li>
   <li class="nav-item">
     <a class="nav-link " href="{{ route('reviews') }}">Reviews</a>

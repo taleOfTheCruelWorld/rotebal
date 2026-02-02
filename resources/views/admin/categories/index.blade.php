@@ -2,11 +2,11 @@
 @section('fill')
 <div class="container-fluid">
 <table class="table table-hover">
-    <tr>
-    <td>id</td>
-    <td>name</td>
-    <td>sort</td>
-    <td>parent category</td>
+    <tr class="table-primary">
+    <td>Id</td>
+    <td>Name</td>
+    <td>Sort</td>
+    <td>Parent category</td>
     <td>Actions <a class="btn btn-success" href="{{ route('categories.create') }}">Create</a></td>
     </tr>
     @foreach ($cats as $cat)
