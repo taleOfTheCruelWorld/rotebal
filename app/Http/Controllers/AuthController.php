@@ -52,10 +52,13 @@ class AuthController extends Controller
     public function cabinet() {
         $data['title'] = "Some Shop";
         if (Auth::user()->admin) {
-        $data['reviews'] = Review::where('status',0)->get();
-        return view('cabinet_admin', $data);
+        return redirect('admin');
         }
         return view('cabinet', $data);
+    }
+    public function admin() {
+        $data['title'] = "Some Shop";
+        return view('admin/cabinet', $data);
     }
     public function changePass() {
         $data['title'] = "Some Shop";

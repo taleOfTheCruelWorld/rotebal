@@ -1,5 +1,5 @@
-@extends('theme')
-@section('content')
+@extends('admin/cabinet')
+@section('fill')
 <div class="container-fluid">
 <table class="table table-hover">
     <tr>

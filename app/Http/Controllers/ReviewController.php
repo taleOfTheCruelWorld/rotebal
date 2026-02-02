@@ -21,7 +21,12 @@ class ReviewController extends Controller
         Review::create($r->all());
         return back();
     }
-    public function reviewCheck(Request $r) {
+    public function reviews() {
+        $data['title'] = "Some Shop";
+        $data['reviews'] = Review::where('status',0)->get();
+        return view('admin/reviews', $data);
+    }
+    public function reviewsCheck(Request $r) {
         $data['title'] = "Some Shop";
         if (Auth::user()->admin) {
             Review::find($r->review)->update(['status'=>$r->status]);

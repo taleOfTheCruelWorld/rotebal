@@ -1,5 +1,5 @@
-@extends('theme')
-@section('content')
+@extends('admin/cabinet')
+@section('fill')
 <div class="container-fluid">
 <form action="{{ route('categories.update', ['category'=>$cat->id]) }}" method="post">
 @csrf
@@ -20,7 +20,10 @@
    <select name="parent_id" class="form-select">
    <option value="0"></option>
    @foreach ($cats as $category)
+            @if ($category->id == $cat->id)
+            @else
             <option  value="{{ $category->id }}" @if ($cat->parent_id == $category->id) {{'selected'}} @endif>{{ $category->name }}</option>
+            @endif
    @endforeach
    </select>
   </div>

@@ -1,9 +1,6 @@
-@extends('theme')
-@section('content')
+@extends('admin/cabinet')
+@section('fill')
 <div class="container">
-    <h1>Кабинет администратора</h1>
-    <div class="row align-items-center">
-        You are admin {{ Auth::user()->login}} !
         <h1>Отзывы</h1>
         <table class="table">
             <tr>

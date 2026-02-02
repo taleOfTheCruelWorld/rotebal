@@ -82,6 +82,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request, Category $category)
     {
+        if ($request->description == null ) {
+            $request['description'] = ' ';
+        }
         Category::create($request->all());
         return redirect('admin/categories');
     }
@@ -115,6 +118,9 @@ class CategoryController extends Controller
         //
         if ($request->parent_id == 0 ) {
             $request['parent_id'] = null;
+        }
+        if ($request->description == null ) {
+            $request['description'] = ' ';
         }
         $category->update($request->all());
         return redirect('admin/categories');
