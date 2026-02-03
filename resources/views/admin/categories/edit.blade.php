@@ -2,6 +2,7 @@
 @section('fill')
 <div class="container-fluid">
 <form action="{{ route('categories.update', ['category'=>$cat->id]) }}" method="post">
+  
 @csrf
 @method('PUT')
   <div class="mb-3">
@@ -18,12 +19,10 @@
   </div>
   <div class="mb-3">
    <select name="parent_id" class="form-select">
+    
    <option value="0"></option>
    @foreach ($cats as $category)
-            @if ($category->id == $cat->id)
-            @else
-            <option  value="{{ $category->id }}" @if ($cat->parent_id == $category->id) {{'selected'}} @endif>{{ $category->name }}</option>
-            @endif
+            <option  value="{{ $category->id }}" @selected($cat->id == $category->id)>{{ $category->name }}</option>
    @endforeach
    </select>
   </div>

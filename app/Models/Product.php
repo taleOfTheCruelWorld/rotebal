@@ -18,4 +18,12 @@ class Product extends Model
     public function country() {
         return $this->belongsTo(Country::class);
     }
+     protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'sort',
+        'category_id',
+        'country_id'
+    ];
 }

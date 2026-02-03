@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -35,5 +36,64 @@ class ProductController extends Controller
         $data['prods'] = $query->paginate(21)->withQueryString();
         $data['title'] = "Some Shop";
         return view ('products', $data);
+    }
+
+     public function index()
+    {
+        $data['products'] = Product::get();
+        $data['title'] = 'some shop';
+        return view('admin/product/index', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $data['categories'] = Category::get();
+        $data['countries'] = Country::get();
+        $data['title'] = 'some shop';
+        return view('admin/product/create', $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        Product::create($request->all());
+        redirect('/admin/products');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
