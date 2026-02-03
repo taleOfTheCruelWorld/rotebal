@@ -22,7 +22,7 @@
     
    <option value="0"></option>
    @foreach ($cats as $category)
-            <option  value="{{ $category->id }}" @selected($cat->id == $category->id)>{{ $category->name }}</option>
+            <option  value="{{ $category->id }}" @selected($cat->parent_id == $category->id)>{{ $category->name }}</option>
    @endforeach
    </select>
   </div>
