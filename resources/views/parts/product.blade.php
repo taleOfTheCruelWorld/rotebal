@@ -1,7 +1,14 @@
 <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
     <div class="card" style="height: 500px; text-align: center;">
+    @if ($prod->photos[0]->thumbnails->path[0] !== '/')
+
         <img src="https://www.вкусней.рф/{{Storage::url($prod->photos[0]->thumbnails->path) }}" class="img-fluid"
             style="height: 300px;" alt="...">
+    @else
+
+        <img src="{{url($prod->photos[0]->thumbnails->path) }}" class="img-fluid"
+            style="height: 300px;" alt="...">
+    @endif
         <div class="card-body">
             <h5 class="card-title">{{ $prod->name }}</h5>
             <p class="card-text">{{ $prod->price }} руб.</p>

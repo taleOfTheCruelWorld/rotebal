@@ -12,8 +12,14 @@
     <p class="text-center">{{ $product->description }}</p>
 
     @foreach ($product->photos as $photo)
-    <img src="https://www.вкусней.рф/{{Storage::url($photo->path) }}" class="img-thumbnail" width="300px"
-        alt="https://www.вкусней.рф/{{ substr($photo->path,7) }}">
+    @if ($photo->path[0] !== '/')
+        <img src="https://www.вкусней.рф/{{Storage::url($photo->path) }}" class="img-thumbnail"
+            style="height: 300px;" alt="...">
+    @else
+
+        <img src="{{url($photo->path) }}" class="img-thumbnail"
+            style="height: 300px;" alt="...">
+    @endif
     @endforeach
 
     <table class="table">

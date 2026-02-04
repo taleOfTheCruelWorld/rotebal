@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\Photo;
+use App\Models\Thumbnail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -61,39 +63,54 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
-        redirect('/admin/products');
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        $thumbName = time().'.'.$request->thumb->extension();
+        $request->thumb->move(public_path('thumbnails'), $thumbName);
+
+        $product = Product::create($request->all());
+        $file = Photo::create(['product_id'=>$product->id,'path'=>('/images/'. $imageName)]);
+        Thumbnail::create(['file_id'=>$file->id,'path'=>('/images/' . $thumbName)]);
+        return redirect('/admin/products');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    }
+     /* * Show the form for editing the specified resource. */
+    public function edit(Product $product)
     {
-        //
+        $data['categories'] = Category::get();
+        $data['countries'] = Country::get();
+        $data['title'] = 'some shop';
+        $data['product'] = $product;
+        return view('admin/product/edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect('admin/products');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect('admin/products');
     }
 }
