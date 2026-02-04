@@ -85,6 +85,12 @@ class CategoryController extends Controller
         if ($request->description == null ) {
             $request['description'] = ' ';
         }
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->file->extension();
+        $request->file->move(public_path('images'), $imageName);
+        $request['image'] = ('/images/' . $imageName);
         Category::create($request->all());
         return redirect('admin/categories');
     }
@@ -122,6 +128,13 @@ class CategoryController extends Controller
         if ($request->description == null ) {
             $request['description'] = ' ';
         }
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->file->extension();
+        $request->file->move(public_path('images'), $imageName);
+        $request['image'] = ('/images/' . $imageName);
+
         $category->update($request->all());
         return redirect('admin/categories');
     }

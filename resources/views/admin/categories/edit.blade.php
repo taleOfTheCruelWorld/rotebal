@@ -1,8 +1,8 @@
 @extends('admin/cabinet')
 @section('fill')
 <div class="container-fluid">
-<form action="{{ route('categories.update', ['category'=>$cat->id]) }}" method="post">
-  
+<form action="{{ route('categories.update', ['category'=>$cat->id]) }}" enctype="multipart/form-data" method="post">
+
 @csrf
 @method('PUT')
   <div class="mb-3">
@@ -19,13 +19,17 @@
   </div>
   <div class="mb-3">
    <select name="parent_id" class="form-select">
-    
+
    <option value="0"></option>
    @foreach ($cats as $category)
             <option  value="{{ $category->id }}" @selected($cat->parent_id == $category->id)>{{ $category->name }}</option>
    @endforeach
    </select>
   </div>
+  <div class="mb-3">
+        <label for="" class="form-label">Image</label>
+        <input type="file" name="file" value="">
+      </div>
   <button type="submit" style="width: 100%;" class="btn btn-primary">Submit</button>
 </form>
 @endsection

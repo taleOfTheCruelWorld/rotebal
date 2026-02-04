@@ -3,6 +3,10 @@
 <div class="container-fluid">
 
 <h1 class="text-center">{{ $cat->name }}</h1>
+@isset($cat->image)
+        <img src="{{url($cat->image) }}" class="img-fluid"
+            style="height: 300px;" alt="...">
+@endisset
 @if ($cat->category == null)
 @else
 <p class="text-center text-body-secondary"> <a href="{{ route('category', ['Category'=>$cat->parent_id]) }}">{{ $cat->category->name}}</a></p>

@@ -1,7 +1,7 @@
 @extends('admin/cabinet')
 @section('fill')
 <div class="container-fluid">
-<form action="{{ route('categories.store') }}" method="post">
+<form action="{{ route('categories.store') }}" enctype="multipart/form-data" method="post">
  @csrf
   <div class="mb-3">
     <label for=""  class="form-label">Name</label>
@@ -23,6 +23,10 @@
    @endforeach
    </select>
   </div>
+  <div class="mb-3">
+        <label for="" class="form-label">Image</label>
+        <input type="file" name="file" value="">
+      </div>
   <button type="submit" style="width: 100%;" class="btn btn-primary">Submit</button>
 </form>
 @endsection

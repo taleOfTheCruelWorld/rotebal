@@ -12,6 +12,7 @@ class Category extends Model
         'sort',
         'parent_id',
         'description',
+        'image',
     ];
 
     public function products() {
