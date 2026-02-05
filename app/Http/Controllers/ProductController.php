@@ -42,9 +42,11 @@ class ProductController extends Controller
 
      public function index()
     {
+        
         $data['products'] = Product::get();
         $data['title'] = 'some shop';
         return view('admin/product/index', $data);
+      
     }
 
     /**

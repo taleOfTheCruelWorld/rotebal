@@ -16,16 +16,16 @@
     <input type="text" name="description" class="form-control"  placeholder="Description">
   </div>
   <div class="mb-3">
-   <select class="form-select">
+   <select class="form-select" name="parent_id">
    <option value="0"></option>
    @foreach ($cats as $category)
-            <option value="category">{{ $category->name }}</option>
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
    @endforeach
    </select>
   </div>
   <div class="mb-3">
         <label for="" class="form-label">Image</label>
-        <input type="file" name="file" value="">
+        <input type="file" name="image">
       </div>
   <button type="submit" style="width: 100%;" class="btn btn-primary">Submit</button>
 </form>

@@ -9,21 +9,21 @@ use App\Models\Country;
 
 class CategoryController extends Controller
 {
-    public function categoryList() {
+    public function categoryList()
+    {
         $data['cats'] = Category::where('parent_id', null)->get();
         $data['title'] = "Some Shop";
-        return view ('categories', $data);
+        return view('categories', $data);
     }
-    public function categoryShow(Request $r,Category $Category) {
+    public function categoryShow(Request $r, Category $Category)
+    {
         $data['cat'] = $Category;
         $query = $data['cat']->products();
-        if ($r->max > 0 )
-        {
-            $query->where('price', '<=',$r->max);
+        if ($r->max > 0) {
+            $query->where('price', '<=', $r->max);
         }
-        if ($r->min > 0 )
-        {
-            $query->where('price', '>=',$r->min);
+        if ($r->min > 0) {
+            $query->where('price', '>=', $r->min);
         }
         if ($r->sort) {
             switch ($r->sort) {
@@ -31,13 +31,13 @@ class CategoryController extends Controller
                     $query->orderBy('price');
                     break;
                 case 'price_up':
-                    $query->orderBy('price','desc');
+                    $query->orderBy('price', 'desc');
                     break;
                 case 'abc':
                     $query->orderBy('name');
                     break;
                 case 'new':
-                    $query->orderBy('id','desc');
+                    $query->orderBy('id', 'desc');
                     break;
                 default:
                     break;
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         $data['countries'] = Country::get();
         $data['prods'] = $query->paginate(10)->withQueryString();
         $data['title'] = "Some Shop";
-        return view ('category', $data);
+        return view('category', $data);
     }
     /**
      * Display a listing of the resource.
@@ -64,7 +64,7 @@ class CategoryController extends Controller
     {
         $data['cats'] = Category::orderBy('sort')->get();
         $data['title'] = "Some Shop";
-        return view ('admin/categories/index', $data);
+        return view('admin/categories/index', $data);
     }
 
     /**
@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         $data['cats'] = Category::get();
         $data['title'] = "Some Shop";
-        return view ('admin/categories/create', $data);
+        return view('admin/categories/create', $data);
     }
 
     /**
@@ -82,16 +82,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request, Category $category)
     {
-        if ($request->description == null ) {
+        if ($request->description == null) {
             $request['description'] = ' ';
         }
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $imageName = time().'.'.$request->file->extension();
-        $request->file->move(public_path('images'), $imageName);
-        $request['image'] = ('/images/' . $imageName);
+
+
+        $request->file('image')->store('images/category', 'public');
+        $request['image'] = ($request->file('image')->getClientOriginalName());
+
+
         Category::create($request->all());
+
         return redirect('admin/categories');
     }
 
@@ -102,7 +106,7 @@ class CategoryController extends Controller
     {
         $data['cat'] = $category;
         $data['title'] = "Some Shop";
-        return view ('admin/categories/show', $data);
+        return view('admin/categories/show', $data);
     }
 
     /**
@@ -113,7 +117,7 @@ class CategoryController extends Controller
         $data['cat'] = $category;
         $data['cats'] = Category::get();
         $data['title'] = "Some Shop";
-        return view ('admin/categories/edit', $data);
+        return view('admin/categories/edit', $data);
     }
 
     /**
@@ -122,16 +126,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
-        if ($request->parent_id == 0 ) {
+        if ($request->parent_id == 0) {
             $request['parent_id'] = null;
         }
-        if ($request->description == null ) {
+        if ($request->description == null) {
             $request['description'] = ' ';
         }
         $request->validate([
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $imageName = time().'.'.$request->file->extension();
+        $imageName = time() . '.' . $request->file->extension();
         $request->file->move(public_path('images'), $imageName);
         $request['image'] = ('/images/' . $imageName);
 
