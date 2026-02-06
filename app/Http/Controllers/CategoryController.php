@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Country;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+
 
 class CategoryController extends Controller
 {
@@ -90,11 +93,18 @@ class CategoryController extends Controller
         ]);
 
 
-        $request->file('image')->store('images/category', 'public');
-        $request['image'] = ($request->file('image')->getClientOriginalName());
+
+        $file = $request->file('image');
+        $file->storeAs('images/category', $file->getClientOriginalName(), 'public');
+
+        $cat = Category::create($request->all());
+        $cat->update(['image' => $file->getClientOriginalName()]);
+
+        $image = ImageManager::imagick()->read(Storage::disk('public')->path('images/category/' . $cat->image));
+        $image->scaleDown(1000, 1000)->save();
 
 
-        Category::create($request->all());
+
 
         return redirect('admin/categories');
     }
@@ -135,11 +145,18 @@ class CategoryController extends Controller
         $request->validate([
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $imageName = time() . '.' . $request->file->extension();
-        $request->file->move(public_path('images'), $imageName);
-        $request['image'] = ('/images/' . $imageName);
 
         $category->update($request->all());
+
+        $file = $request->file('image');
+        $file->storeAs('images/category', $file->getClientOriginalName(), 'public');
+
+        $cat = Category::create($request->all());
+        $cat->update(['image' => $file->getClientOriginalName()]);
+
+        $image = ImageManager::imagick()->read(Storage::disk('public')->path('images/category/' . $cat->image));
+        $image->scaleDown(1000, 1000)->save();
+
         return redirect('admin/categories');
     }
 

@@ -28,6 +28,7 @@ Route::post('/cabinet/reviews', [ReviewController::class,'reviewsCheck'])->name(
 Route::get('/cabinet/changePass', [AuthController::class,'changePass'])->name('changePass')->middleware('auth');
 Route::post('/cabinet/changePass', [AuthController::class,'changePassHandle'])->name('changePassHandle')->middleware('auth');
 Route::post('/product/{Product}/review', [ReviewController::class,'review'])->name('review')->middleware('auth');
+Route::get('/cabinet/saved', [AuthController::class,'saved'])->name('saved')->middleware('auth');
 
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function(){
 Route::resource('categories', CategoryController::class);

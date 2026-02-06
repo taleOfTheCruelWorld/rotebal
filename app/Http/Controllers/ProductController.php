@@ -103,7 +103,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+           $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        $thumbName = time().'.'.$request->thumb->extension();
+        $request->thumb->move(public_path('thumbnails'), $thumbName);
+
         $product->update($request->all());
+        $file = Photo::create(['product_id'=>$product->id,'path'=>('/images/'. $imageName)]);
+        Thumbnail::create(['file_id'=>$file->id,'path'=>('/images/' . $thumbName)]);
+      
         return redirect('admin/products');
     }
 

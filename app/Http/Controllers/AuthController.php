@@ -77,4 +77,10 @@ class AuthController extends Controller
         }
             return back()->withErrors(['password.check'=>'Old password incorrect']);
     }
+
+    public function saved(){
+        $data['title'] = 'some shop';
+        $data['saved'] = Auth::user()->products;
+        return view('saved', $data);
+    }
 }

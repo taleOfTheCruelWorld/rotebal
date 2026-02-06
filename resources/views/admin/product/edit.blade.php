@@ -40,6 +40,14 @@
           @endforeach
         </select>
       </div>
+       <div class="mb-3">
+        <label for="" class="form-label">Image</label>
+        <input type="file" name="image" value="">
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Thumbnails</label>
+        <input type="file" name="thumb" value="">
+      </div>
       <button type="submit" style="width: 100%;" class="btn btn-primary">Submit</button>
     </form>
 @endsection
